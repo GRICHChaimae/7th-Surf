@@ -1,10 +1,9 @@
 import { UserRepository } from "../../../domain/ports/UserRepository";
 import { User } from "../../../domain/entities/User";
-import { pool } from "../connection"
+import { pool } from "../connection";
 
 export class PostgresUserRepository implements UserRepository {
-
-  async findByEmail(email: string): Promise<boolean> {
+  async findByEmail(email: string): Promise <User | null> {
     const result = await pool.query(
       `
         SELECT 1
@@ -12,10 +11,20 @@ export class PostgresUserRepository implements UserRepository {
         WHERE email = $1
         LIMIT 1
       `,
-      [email]
+      [email],
     );
 
-    return result.rows.length > 0;
+    if (result.rows.length === 0) {
+      return null;
+    }
+
+    const row = result.rows[0];
+    return {
+      firstName: row.firstName,
+      lastName: row.lastName,
+      email: row.email,
+      password: row.password,
+    };
   }
 
   async save(user: User): Promise<void> {
@@ -24,12 +33,7 @@ export class PostgresUserRepository implements UserRepository {
       INSERT INTO users (firstName, lastName, email, password)
       VALUES ($1, $2, $3, $4)
       `,
-      [
-        user.firstName,
-        user.lastName,
-        user.email,
-        user.password
-      ]
+      [user.firstName, user.lastName, user.email, user.password],
     );
   }
 }
