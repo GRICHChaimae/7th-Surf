@@ -2,6 +2,7 @@ import { PostgresUserRepository } from "../db/repositories/PostgresUserRepositor
 import { BcryptPasswordHasher } from "../security/BcryptPasswordHasher";
 
 import { Signup } from "../../application/use-cases/user/signup";
+import { Login } from "../../application/use-cases/user/login";
 import { UserController } from "../web/controllers/UserController";
 
 const userRepository = new PostgresUserRepository();
@@ -12,4 +13,12 @@ const signup = new Signup(
   passwordHasher
 );
 
-export const userController = new UserController(signup);
+const login = new Login(
+  userRepository,
+  passwordHasher
+);
+
+export const userController = new UserController(
+  signup,
+  login
+);

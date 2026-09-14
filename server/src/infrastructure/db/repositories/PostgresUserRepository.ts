@@ -6,7 +6,7 @@ export class PostgresUserRepository implements UserRepository {
   async findByEmail(email: string): Promise <User | null> {
     const result = await pool.query(
       `
-        SELECT 1
+        SELECT id, firstName, lastName, email, password
         FROM users
         WHERE email = $1
         LIMIT 1
@@ -19,12 +19,8 @@ export class PostgresUserRepository implements UserRepository {
     }
 
     const row = result.rows[0];
-    return {
-      firstName: row.firstName,
-      lastName: row.lastName,
-      email: row.email,
-      password: row.password,
-    };
+    
+    return row;
   }
 
   async save(user: User): Promise<void> {
