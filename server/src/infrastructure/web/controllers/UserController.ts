@@ -12,7 +12,8 @@ export class UserController {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      role: req.body.role
     });
 
     res.status(201).send();
