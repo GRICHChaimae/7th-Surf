@@ -6,7 +6,7 @@ export class PostgresUserRepository implements UserRepository {
   async findByEmail(email: string): Promise <User | null> {
     const result = await pool.query(
       `
-        SELECT id, firstName, lastName, email, password
+        SELECT id, firstName, lastName, email, password, role
         FROM users
         WHERE email = $1
         LIMIT 1

@@ -7,6 +7,7 @@ interface SignupInput {
   lastName: string;
   email: string;
   password: string;
+  role: 'user' | 'admin';
 }
 
 export class Signup {
@@ -31,6 +32,7 @@ export class Signup {
       lastName: input.lastName,
       email: input.email,
       password: passwordHash,
+      role: input.role
     };
 
     await this.userRepository.save(user);
