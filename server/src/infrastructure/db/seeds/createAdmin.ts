@@ -5,13 +5,13 @@ import { BcryptPasswordHasher } from "../../security/BcryptPasswordHasher";
 
 async function createAdmin(): Promise<void> {
   const firstName = process.env.ADMIN_FIRST_NAME;
-  const lastName = process.env.ADMIN_Last_NAME;
+  const lastName = process.env.ADMIN_LAST_NAME;
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
 
   if (!firstName || !lastName || !email || !password) {
     throw new Error(
-      "Missing ADMIN_FIRST_NAME, ADMIN_Last_NAME, ADMIN_EMAIL or ADMIN_PASSWORD environment variable."
+      "Missing ADMIN_FIRST_NAME, ADMIN_LAST_NAME, ADMIN_EMAIL or ADMIN_PASSWORD environment variable."
     );
   }
 
