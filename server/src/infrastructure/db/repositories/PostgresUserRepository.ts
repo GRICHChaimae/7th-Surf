@@ -3,7 +3,7 @@ import { User } from "../../../domain/entities/User";
 import { pool } from "../connection";
 
 export class PostgresUserRepository implements UserRepository {
-  async findByEmail(email: string): Promise <User | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const result = await pool.query(
       `
         SELECT id, firstName, lastName, email, password, role
@@ -19,8 +19,32 @@ export class PostgresUserRepository implements UserRepository {
     }
 
     const row = result.rows[0];
-    
+
     return row;
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const result = await pool.query(
+      `SELECT id, name, email, password_hash, role
+     FROM users
+     WHERE id = $1`,
+      [id],
+    );
+
+    if (result.rows.length === 0) {
+      return null;
+    }
+
+    const row = result.rows[0];
+
+    return {
+      id: row.id,
+      firstName: row.firstName,
+      lastName: row.lastName,
+      email: row.email,
+      password: row.password_hash,
+      role: row.role,
+    };
   }
 
   async save(user: User): Promise<void> {
