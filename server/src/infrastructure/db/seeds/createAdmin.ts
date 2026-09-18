@@ -11,7 +11,7 @@ async function createAdmin(): Promise<void> {
 
   if (!firstName || !lastName || !email || !password) {
     throw new Error(
-      "Missing ADMIN_FIRST_NAME, ADMIN_Last_NAME, ADMIN_EMAIL or ADMIN_PASSWORD environment variable."
+      "Missing ADMIN_FIRST_NAME, ADMIN_LAST_NAME, ADMIN_EMAIL or ADMIN_PASSWORD environment variable."
     );
   }
 
