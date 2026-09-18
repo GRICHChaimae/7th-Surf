@@ -5,7 +5,7 @@ import { BcryptPasswordHasher } from "../../security/BcryptPasswordHasher";
 
 async function createAdmin(): Promise<void> {
   const firstName = process.env.ADMIN_FIRST_NAME;
-  const lastName = process.env.ADMIN_Last_NAME;
+  const lastName = process.env.ADMIN_LAST_NAME;
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
 
