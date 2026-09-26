@@ -1,5 +1,6 @@
 import { UserRepository } from "../../../domain/ports/UserRepository";
 import { User } from "../../../domain/entities/User";
+import { CreateUser } from "../../../domain/entities/User";
 import { pool } from "../connection";
 
 export class PostgresUserRepository implements UserRepository {
@@ -26,8 +27,8 @@ export class PostgresUserRepository implements UserRepository {
   async findById(id: string): Promise<User | null> {
     const result = await pool.query(
       `SELECT id, name, email, password_hash, role
-     FROM users
-     WHERE id = $1`,
+      FROM users
+      WHERE id = $1`,
       [id],
     );
 
@@ -47,7 +48,7 @@ export class PostgresUserRepository implements UserRepository {
     };
   }
 
-  async save(user: User): Promise<void> {
+  async save(user: CreateUser): Promise<void> {
     await pool.query(
       `
       INSERT INTO users (firstName, lastName, email, password)

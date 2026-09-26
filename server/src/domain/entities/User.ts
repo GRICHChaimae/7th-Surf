@@ -6,3 +6,5 @@ export interface User {
   password: string;
   role: "user" | "admin"
 }
+
+export type CreateUser = Omit<User, "id">;
